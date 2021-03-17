@@ -58,11 +58,11 @@ class Auth0IndexController extends Controller
             return redirect()->route('login');
         }
 
-        $this->profileinfo(Auth::user()->getUserInfo()['email']);
-        // return view('profile')->with(
-        //     'user',
-        //     print_r(Auth::user()->getUserInfo(), true)
-        // );
+        $data = $this->profileinfo(Auth::user()->getUserInfo()['email']);
+        return view('profile')->with(
+            'user',
+            print_r($data, true)
+        );
     }
 
     public function profileinfo($email)
@@ -88,7 +88,7 @@ class Auth0IndexController extends Controller
             if ($err) {
                 echo "cURL Error #:" . $err;
             } else {
-                dd($response);
+                return json_decode($response);
             };
     }
 }
